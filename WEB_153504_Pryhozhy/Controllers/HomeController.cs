@@ -4,9 +4,9 @@ namespace WEB_153504_Pryhozhy.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        public ViewResult Index()
         {
-            return "Hello, world!";
+            return View();
         }
     }
 }
