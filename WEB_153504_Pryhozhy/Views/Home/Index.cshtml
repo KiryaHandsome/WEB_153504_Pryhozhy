@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewBag.Title = "Index";
 }
+
+<h3>Лабораторная работа № 1</h3>
+<h5>Список</h5>
+<ol type="A">
+    <li>Элемент списка 1</li>
+    <li>Элемент списка 2</li>
+</ol>
+<hr />
+<h5>Форма</h5>
+<form method="post">
+    <!-- Checkboxes -->
+    <div class="form-check offset-sm-2">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            Первый чекбокс
+        </label>
+    </div>
+    <div class="form-check offset-sm-2">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+        <label class="form-check-label" for="flexCheckDefault">
+            Второй чекбокс выбранный
+        </label>
+    </div>
+    <br />
+    <!-- Radio buttons -->
+    <div class="col-sm-10 offset-sm-2">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="rowRadios1" name="rowRadios" />
+            <label class="form-check-label" for="rowRadios1">
+                Radio3
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="rowRadios2" name="rowRadios" />
+            <label class="form-check-label" for="rowRadios2">
+                Radio2
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="rowRadios3" name="rowRadios" />
+            <label class="form-check-label" for="rowRadios3">
+                Radio3
+            </label>
+        </div>
+    </div>
+    <br />
+    <!-- Login and password inputs -->
+    <div class="mb-3 row">
+        <label for="loginInput" class="col-sm-2 col-form-label">Логин</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="loginInput" placeholder="Введите имя...">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="passwordInput" class="col-sm-2 col-form-label">Пароль</label>
+        <div class="col-sm-10">
+            <input class="form-control" id="passwordInput" placeholder="Введите пароль...">
+        </div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Отправить</button>
+    </div>
+</form>
