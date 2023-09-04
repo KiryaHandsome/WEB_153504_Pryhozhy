@@ -1,32 +1,23 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewData["Title"] = "Лабораторная работа №2";
 }
 
-<h3>Лабораторная работа № 1</h3>
-<h5>Список</h5>
+<h1>@ViewData["Title"]</h1>
+<h3>Список</h3>
 <ol type="A">
-    <li>Элемент списка 1</li>
-    <li>Элемент списка 2</li>
+    @for(int i = 1; i <= 3; i++)
+    {
+        <li>Элемент списка @i</li>
+    }
 </ol>
 <hr />
-<h5>Форма</h5>
+<h3>Форма</h3>
 <form method="post">
-    <!-- Checkboxes -->
-    <div class="form-check offset-sm-2">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            Первый чекбокс
-        </label>
-    </div>
-    <div class="form-check offset-sm-2">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-        <label class="form-check-label" for="flexCheckDefault">
-            Второй чекбокс выбранный
-        </label>
-    </div>
-    <br />
-    <!-- Radio buttons -->
     <div class="col-sm-10 offset-sm-2">
+        <!-- Dropdown list -->
+        <label for="selectedOption">Выберите опцию:</label>
+        <select class="form-select" name="selDemo" asp-items="@Model" class="form-control"></select>
+        <!-- Radio buttons -->
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" id="rowRadios1" name="rowRadios" />
             <label class="form-check-label" for="rowRadios1">

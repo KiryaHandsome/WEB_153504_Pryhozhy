@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,46 +14,11 @@
     <header>
         <div class="container">
             <span class="nav-color">15350102</span>
-            <!-- User menu -->
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">WebLabsV 2.0</a>
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Лб 1</a>
-                    <a class="nav-item nav-link" href="#">Каталог</a>
-                    <a class="nav-item nav-link" href="#">Администрирование</a>
-                </div>
+               <!-- Site menu -->
+                <partial name="_MenuPartial"/>
                 <!-- User info -->
-                <a href="#" class="navbar-text ms-auto">
-                    00,0 руб <i class="fa-solid fa-cart-shopping"></i> (0)
-                </a>
-                <div class="dropdown ms-4 nav-color">
-                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        User@gmail.com
-                        <img src="images/default-profile-picture.png"
-                             width="30"
-                             alt="User" class="rounded nav-color" />
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li>
-                            <span class="dropdown-item-text">
-                                <img src="images/default-profile-picture.png"
-                                     width="50" alt="User" class="rounded" />
-                                user@gmail.com
-                            </span>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form id="logoutForm" class="form-inline">
-                                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">
-                                    Logout
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                <partial name="_UserInfoPartial" />
             </nav>
         </div>
     </header>
