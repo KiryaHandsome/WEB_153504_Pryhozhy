@@ -1,0 +1,94 @@
+@model ListModel<Pizza>;
+
+@{
+    ViewData["Title"] = "Pizza Catalog";
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+    var categories = ViewData["categories"] as List<Category>;
+    int prev = Model.CurrentPage == 1 ? 1 : Model.CurrentPage - 1;
+    int next = Model.CurrentPage == Model.TotalPages ? Model.TotalPages : Model.CurrentPage + 1;
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<!-- Category picking -->
+<div class="col-2 border-2">
+    <ul class="nav ">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               data-bs-toggle="dropdown"
+               href="#"
+               role="button"
+               aria-expanded="false">
+                @ViewData["currentCategory"]
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item"
+                       asp-controller="pizza">
+                        Все
+                    </a>
+                </li>
+                @foreach (var item in categories)
+                {
+                    <li>
+                        <a class="dropdown-item"
+                           asp-controller="pizza"
+                           asp-route-category="@item.NormalizedName">
+                            @item.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model.Items)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@item.Image" class="card-img-top pizza-img">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <div class="btn btn-primary" asp-action="some action">
+                    В корзину
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<br/>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "active")">
+            <a class="page-link"
+               asp-controller="pizza"
+               asp-route-pageNo="@prev">
+                &laquo;
+            </a>
+        </li>
+        @for (var pageNum = 1; pageNum <= Model.TotalPages; pageNum += 1)
+        {
+            <li class="page-item @(pageNum == Model.CurrentPage ? "active" : "")">
+                <a class="page-link"
+                   asp-controller="pizza"
+                   asp-route-pageNo="@pageNum">
+                    @pageNum    
+                </a>
+            </li>
+        }
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "active")">
+            <a class="page-link"
+               asp-controller="pizza"
+               asp-route-pageNo="@next">
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</nav>

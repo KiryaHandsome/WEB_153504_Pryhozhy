@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WEB_15354_Pryhozhy.Domain.Entities
+namespace WEB_153504_Pryhozhy.Domain.Entities
 {
     public class Category
     {

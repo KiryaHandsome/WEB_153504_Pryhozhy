@@ -5,3 +5,28 @@ header, footer {
 .nav-color {
     color: rgba(255, 255, 255, 1);
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.pizza-img {
+    width: 160px;
+    min-height: 100px;
+    max-height: auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-text {
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis; /* Add an ellipsis (...) when text overflows */
+    max-width: 100%; /* Ensure text doesn't exceed the card's width */
+}

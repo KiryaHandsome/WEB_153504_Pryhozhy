@@ -1,7 +1,13 @@
+using WEB_153504_Pryhozhy.Services.CategoryService;
+using WEB_153504_Pryhozhy.Services.PizzaService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services
+    .AddScoped<ICategoryService, MemoryCategoryService>()
+    .AddScoped<IPizzaService, MemoryPizzaService>();
 
 var app = builder.Build();
 

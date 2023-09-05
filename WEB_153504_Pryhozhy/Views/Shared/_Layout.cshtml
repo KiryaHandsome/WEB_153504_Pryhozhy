@@ -9,15 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WEB_153504_Pryhozhy.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <header>
         <div class="container">
-            <span class="nav-color">15350102</span>
+            <span class="nav-color">
+                Номер зачетки: 15350102
+            </span>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-               <!-- Site menu -->
-                <partial name="_MenuPartial"/>
-                <!-- User info -->
+                <partial name="_MenuPartial" />
                 <partial name="_UserInfoPartial" />
             </nav>
         </div>
