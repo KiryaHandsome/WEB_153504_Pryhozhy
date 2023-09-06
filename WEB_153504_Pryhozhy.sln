@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153504_Pryhozhy", "WEB_153504_Pryhozhy\WEB_153504_Pryhozhy.csproj", "{0583586C-9DDD-4059-A88C-2100842081FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153504_Pryhozhy.Domain", "WEB_15354_Pryhozhy.Domain\WEB_153504_Pryhozhy.Domain.csproj", "{E73A00BD-DA69-4B4A-BB5B-746CCE57EC65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153504_Pryhozhy.Domain", "WEB_15354_Pryhozhy.Domain\WEB_153504_Pryhozhy.Domain.csproj", "{E73A00BD-DA69-4B4A-BB5B-746CCE57EC65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153504_Pryhozhy.API", "WEB_153504_Pryhozhy.API\WEB_153504_Pryhozhy.API.csproj", "{92CB9D32-AA42-427A-A944-F00F4DB8B417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E73A00BD-DA69-4B4A-BB5B-746CCE57EC65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E73A00BD-DA69-4B4A-BB5B-746CCE57EC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E73A00BD-DA69-4B4A-BB5B-746CCE57EC65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92CB9D32-AA42-427A-A944-F00F4DB8B417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CB9D32-AA42-427A-A944-F00F4DB8B417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CB9D32-AA42-427A-A944-F00F4DB8B417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CB9D32-AA42-427A-A944-F00F4DB8B417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -31,7 +31,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
                     Id = 1,
                     Calories = 500,
                     Description = "Классная Пицца-дрицца",
-                    Image = "images/pizza_drizza.jpg",
+                    Image = "Images/pizza_drizza.jpg",
                     Name = "пицца-дрицца",
                     CategoryId = 1
                 },
@@ -39,7 +39,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
                     Id = 2,
                     Calories = 231,
                     Description = "Низкокалорийная пицца для похудения",
-                    Image = "images/PPizza.jpg",
+                    Image = "Images/PPizza.jpg",
                     Name = "ППицца",
                     CategoryId = 2
                 },
@@ -47,7 +47,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
                     Id = 3,
                     Calories = 671,
                     Description = "Пицца с четырьмя видами сыра",
-                    Image = "images/four_cheese.jpg",
+                    Image = "Images/four_cheese.jpg",
                     Name = "Четыре сыра",
                     CategoryId = 3
                 },
@@ -55,7 +55,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
                     Id = 4,
                     Calories = 671,
                     Description = "FFF",
-                    Image = "images/four_cheese.jpg",
+                    Image = "Images/four_cheese.jpg",
                     Name = "FFFFF",
                     CategoryId = 3
                 },
