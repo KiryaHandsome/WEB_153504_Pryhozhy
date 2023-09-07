@@ -10,8 +10,8 @@ using WEB_153504_Pryhozhy.API.Data;
 namespace WEB_153504_Pryhozhy.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230907120438_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230907224537_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

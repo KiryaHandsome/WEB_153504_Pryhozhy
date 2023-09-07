@@ -1,13 +1,17 @@
+using WEB_153504_Pryhozhy.Models;
 using WEB_153504_Pryhozhy.Services.CategoryService;
 using WEB_153504_Pryhozhy.Services.PizzaService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+UriData? uriData = builder.Configuration.GetSection("UriData").Get<UriData>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<IPizzaService, ApiPizzaService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 builder.Services
-    .AddScoped<ICategoryService, MemoryCategoryService>()
-    .AddScoped<IPizzaService, MemoryPizzaService>();
+    .AddScoped<ICategoryService, MemoryCategoryService>();
+    //.AddScoped<IPizzaService, MemoryPizzaService>();
 
 var app = builder.Build();
 

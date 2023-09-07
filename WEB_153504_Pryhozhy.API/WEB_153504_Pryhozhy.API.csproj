@@ -24,4 +24,8 @@
     <ProjectReference Include="..\WEB_15354_Pryhozhy.Domain\WEB_153504_Pryhozhy.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

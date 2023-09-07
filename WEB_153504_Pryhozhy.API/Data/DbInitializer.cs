@@ -8,10 +8,8 @@ namespace WEB_153504_Pryhozhy.API.Data
         public static async Task SeedData(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
-            var services = scope.ServiceProvider;
-            var dbContext = services.GetRequiredService<AppDbContext>();
-            var hostingEnvironment = services.GetRequiredService<IWebHostEnvironment>();
-            var imageUrl = app.Configuration["ImageUrl"];
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var imageUrl = app.Configuration.GetSection("ImageSettings:ImageUrl").Get<string>();
             // Ensure that the database is created and apply pending migrations
             await dbContext.Database.MigrateAsync(); 
 
@@ -19,7 +17,7 @@ namespace WEB_153504_Pryhozhy.API.Data
             if (!dbContext.Pizzas.Any())
             {
                 // Sample data to be seeded
-                var sampleData = new[]
+                var pizzas = new List<Pizza>()
                 {
                     new Pizza {
                         Calories = 500,
@@ -50,6 +48,8 @@ namespace WEB_153504_Pryhozhy.API.Data
                         CategoryId = 3
                     },
                 };
+
+                dbContext.Pizzas.AddRange(pizzas);
 
                 await dbContext.SaveChangesAsync();
             }
