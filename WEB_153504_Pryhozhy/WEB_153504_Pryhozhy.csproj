@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WEB_153504_Pryhozhy.API\WEB_153504_Pryhozhy.API.csproj" />
     <ProjectReference Include="..\WEB_15354_Pryhozhy.Domain\WEB_153504_Pryhozhy.Domain.csproj" />
   </ItemGroup>
 

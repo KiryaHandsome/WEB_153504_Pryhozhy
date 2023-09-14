@@ -3,12 +3,12 @@
 namespace WEB_153504_Pryhozhy.Components
 {
     [ViewComponent]
-    public class Cart
+    public class Cart : ViewComponent
     {
 
-        public async Task<string> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
-            return await Task.Run(() => "0,00$");
+            return View();
         }
     }
 }
