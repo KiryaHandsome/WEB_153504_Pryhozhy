@@ -1,0 +1,103 @@
+﻿@page
+@model WEB_153504_Pryhozhy.Areas.Admin.Pages.Pizzas.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    int prev = Model.Pizza.CurrentPage == 1 ? 1 : Model.Pizza.CurrentPage - 1;
+    int next = Model.Pizza.CurrentPage == Model.Pizza.TotalPages ? Model.Pizza.TotalPages : Model.Pizza.CurrentPage + 1;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-dark btn-block ml-4">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].Calories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pizza.Items[0].Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pizza.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calories)
+                </td>
+                <td>
+                    <img src="@item.Image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <div class="d-flex flex-column justify-content-center align-middle">
+                        <a class="btn btn-outline-warning btn-block" asp-page="/Pizzas/Edit" asp-route-id="@item.Id">Редактировать</a>
+                        <a class="btn btn-outline-info btn-block" asp-page="/Pizzas/Details" asp-route-id="@item.Id">Подробнее</a>
+                        <a class="btn btn-outline-danger btn-block" asp-page="/Pizzas/Delete" asp-route-id="@item.Id">Удалить</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.Pizza.CurrentPage == 1 ? "disabled" : "active")">
+            <a asp-area="Admin" asp-page="/Pizzas/Index" asp-route-pageNo="@prev" class="page-link">&laquo;</a>
+        </li>
+        @for (var num = 1; num <= Model.Pizza.TotalPages; num += 1)
+        {
+            <li class="page-item @(num.Equals(Model.Pizza.CurrentPage)  ? "active" : "")">
+                <a class="page-link" asp-area="Admin" asp-page="/Pizzas/Index" asp-route-pageNo="@num">@num</a></li>
+        }
+        <li class="page-item @(Model.Pizza.CurrentPage==Model.Pizza.TotalPages ? "disabled" : "active")">
+            <a class="page-link" asp-area="Admin" asp-page="/Pizzas/Index" asp-route-pageNo="@next">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    td img {
+        height: 200px;
+        object-fit: contain;
+    }
+
+    .page-item.active .page-link {
+        background-color: cornflowerblue;
+        border-color: cornflowerblue;
+    }
+
+    .page-link {
+        color: cornflowerblue;
+    }
+</style>

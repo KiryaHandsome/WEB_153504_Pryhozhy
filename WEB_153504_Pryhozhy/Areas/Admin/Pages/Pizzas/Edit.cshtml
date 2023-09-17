@@ -1,0 +1,101 @@
+﻿@page
+@model WEB_153504_Pryhozhy.Areas.Admin.Pages.Pizzas.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var categories = ViewData["categories"] as List<Category>;
+}
+
+<h1>Edit</h1>
+
+<h4>Pizza</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Pizza.Id" />
+            <div class="form-group">
+                <label asp-for="Pizza.Name" class="control-label"></label>
+                <input asp-for="Pizza.Name" class="form-control" />
+                <span asp-validation-for="Pizza.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pizza.Calories" class="control-label"></label>
+                <input asp-for="Pizza.Calories" class="form-control" />
+                <span asp-validation-for="Pizza.Calories" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3 start-image">
+                <label asp-for="Pizza.Image" class="control-label">Исходное изображение</label>
+                <img src="@Model.Pizza.Image" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="@Model.Image">Новое изображение</label>
+                <div class="input-group" asp-for="@Model.Image">
+                    <input type="file" class="form-control" asp-for="@Model.Image" accept="image/*">
+                </div>
+            </div>
+            <div class="dropdown me-2 ml-2 ms-2">
+                <button class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenu2"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    @ViewData["currentCategory"]
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li>
+                        <a class="dropdown-item"
+                           asp-controller="pizza"
+                           asp-route-category=@null>Все</a>
+                    </li>
+                    @foreach (var item in categories)
+                    {
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="pizza"
+                               asp-route-category="@item.NormalizedName">
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pizza.CategoryId" class="control-label"></label>
+                <input asp-for="Pizza.CategoryId" class="form-control" />
+                <span asp-validation-for="Pizza.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pizza.Description" class="control-label"></label>
+                <input asp-for="Pizza.Description" class="form-control" />
+                <span asp-validation-for="Pizza.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pizza.Price" class="control-label"></label>
+                <input asp-for="Pizza.Price" class="form-control" />
+                <span asp-validation-for="Pizza.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<div>
+    <a class="btn btn-sm btn-outline-dark"
+       asp-page="Index">
+        <i class="fa-solid fa-arrow-left text-white"></i>
+        Вернуться к списку
+    </a>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

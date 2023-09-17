@@ -1,0 +1,58 @@
+﻿@page
+@model WEB_153504_Pryhozhy.Areas.Admin.Pages.Pizzas.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Pizza</h4>
+    <hr />
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Название</th>
+                <td>@Model.Pizza.Name</td>
+            </tr>
+            <tr>
+                <th scope="row">Описание</th>
+                <td>@Model.Pizza.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена</th>
+                <td>@Model.Pizza.Price</td>
+            </tr>
+            <tr>
+                <th scope="row">Калории</th>
+                <td>@Model.Pizza.Calories</td>
+            </tr>
+            <tr>
+                <th scope="row">Изображение</th>
+                <td>
+                    <img src="@Model.Pizza.Image" />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Категория</th>
+                <td>@Model.Pizza.CategoryId</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-page="./Edit"
+       class="btn btn-sm btn-outline-dark"
+       asp-route-id="@Model.Pizza?.Id">
+        Edit
+    </a>
+    <div>
+        <a class="btn btn-sm btn-outline-dark"
+           asp-page="Index">
+            <i class="fa-solid fa-arrow-left text-white"></i>
+            Вернуться к списку
+        </a>
+    </div>
+
+</div>

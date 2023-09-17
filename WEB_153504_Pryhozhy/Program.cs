@@ -9,9 +9,9 @@ UriData? uriData = builder.Configuration.GetSection("UriData").Get<UriData>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IPizzaService, ApiPizzaService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
-builder.Services
-    .AddScoped<ICategoryService, MemoryCategoryService>();
-    //.AddScoped<IPizzaService, MemoryPizzaService>();
+builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -29,10 +29,11 @@ app
     .UseRouting()
     .UseAuthorization();
 
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
+
+app.MapRazorPages();
 
 app.Run();

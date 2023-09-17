@@ -6,6 +6,7 @@ using WEB_153504_Pryhozhy.API.Services.PizzaService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPizzaService, PizzaService>();

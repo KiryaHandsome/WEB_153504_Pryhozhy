@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WEB_153504_Pryhozhy.Domain.Entities;
 using WEB_153504_Pryhozhy.Services.CategoryService;
 using WEB_153504_Pryhozhy.Services.PizzaService;
 
 namespace WEB_153504_Pryhozhy.Controllers
 {
+    [Route("catalog")]
     public class PizzaController : Controller
     {
         private readonly IPizzaService _pizzaService;
@@ -27,8 +29,21 @@ namespace WEB_153504_Pryhozhy.Controllers
             {
                 return NotFound(productResponse.ErrorMessage);
             }
-                
+
+            ViewData["currentCategory"] = GetCategoryNameOrDefault(category, categoryResponse.Data.Items);
             return View(productResponse.Data);
+        }
+
+        private string GetCategoryNameOrDefault(string? categoryNormalizedName, List<Category> categories)
+        {
+            if (categoryNormalizedName == null)
+            {
+                return "Все";
+            }
+            else
+            {
+                return categories.Find(c => c.NormalizedName == categoryNormalizedName).Name;
+            }
         }
     }
 }

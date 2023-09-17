@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WEB_153504_Pryhozhy.API.Data;
 using WEB_153504_Pryhozhy.API.Services.PizzaService;
 using WEB_153504_Pryhozhy.Domain.Entities;
+using WEB_153504_Pryhozhy.Domain.Models;
 
 namespace WEB_153504_Pryhozhy.API.Controllers
 {
@@ -61,6 +63,17 @@ namespace WEB_153504_Pryhozhy.API.Controllers
             await _pizzaService.DeleteAsync(id);
 
             return NoContent();
+        }
+
+        [HttpPost("{id}")]
+        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
+        {
+            var response = await _pizzaService.SaveImageAsync(id, formFile);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return NotFound(response);
         }
     }
 }
