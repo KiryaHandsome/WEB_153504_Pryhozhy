@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var categories = ViewData["categories"] as List<Category>;
 }
 
 <h1>Create</h1>
@@ -29,10 +30,12 @@
                     <input type="file" class="form-control" asp-for="@Model.Image" accept="image/*">
                 </div>
             </div>
-            <div class="form-groupmb-3 ">
-                <label asp-for="Pizza.CategoryId" class="control-label">Категория</label>
-                <input asp-for="Pizza.CategoryId" class="form-control" />
-                <span asp-validation-for="Pizza.CategoryId" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="Pizza.CategoryId">Категория</label>
+                <select asp-for="Pizza.CategoryId"
+                        asp-items="@(new SelectList(categories, "Id", "Name"))"
+                        class="form-control">
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Pizza.Description" class="control-label"></label>
@@ -60,6 +63,8 @@
 </div>
 
 @section Scripts {
+    <a href="c:\projects\csharp\web_153504_pryhozhy\web_153504_pryhozhy\areas\admin\pages\pizzas\create.cshtml.cs">c:\projects\csharp\web_153504_pryhozhy\web_153504_pryhozhy\areas\admin\pages\pizzas\create.cshtml.cs</a>
+    <a href="c:\projects\csharp\web_153504_pryhozhy\web_153504_pryhozhy\areas\admin\pages\pizzas\create.cshtml">c:\projects\csharp\web_153504_pryhozhy\web_153504_pryhozhy\areas\admin\pages\pizzas\create.cshtml</a>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

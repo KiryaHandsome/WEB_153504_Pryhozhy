@@ -35,37 +35,12 @@
                     <input type="file" class="form-control" asp-for="@Model.Image" accept="image/*">
                 </div>
             </div>
-            <div class="dropdown me-2 ml-2 ms-2">
-                <button class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenu2"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    @ViewData["currentCategory"]
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li>
-                        <a class="dropdown-item"
-                           asp-controller="pizza"
-                           asp-route-category=@null>Все</a>
-                    </li>
-                    @foreach (var item in categories)
-                    {
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item"
-                               asp-controller="pizza"
-                               asp-route-category="@item.NormalizedName">
-                                @item.Name
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
             <div class="form-group">
-                <label asp-for="Pizza.CategoryId" class="control-label"></label>
-                <input asp-for="Pizza.CategoryId" class="form-control" />
-                <span asp-validation-for="Pizza.CategoryId" class="text-danger"></span>
+                <label asp-for="Pizza.CategoryId">Категория</label>
+                <select asp-for="Pizza.CategoryId"
+                        asp-items="@(new SelectList(categories, "Id", "Name"))"
+                        class="form-control">
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Pizza.Description" class="control-label"></label>

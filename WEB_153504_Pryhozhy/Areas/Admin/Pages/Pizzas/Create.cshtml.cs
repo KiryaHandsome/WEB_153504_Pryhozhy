@@ -21,7 +21,7 @@ namespace WEB_153504_Pryhozhy.Areas.Admin.Pages.Pizzas
         public async Task<IActionResult> OnGetAsync()
         {
             var categories = await _categoryService.GetCategoryListAsync();
-            ViewData["categories"] = categories;
+            ViewData["categories"] = categories.Data.Items;
             return Page();
         }
 

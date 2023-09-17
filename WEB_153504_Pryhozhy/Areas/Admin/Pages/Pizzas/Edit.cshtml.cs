@@ -32,7 +32,8 @@ namespace WEB_153504_Pryhozhy.Areas.Admin.Pages.Pizzas
             }
 
             var pizza = await _pizzaService.GetByIdAsync((int)id);
-            ViewData["categories"] = await _categoryService.GetCategoryListAsync();
+            ViewData["categories"] = (await _categoryService.GetCategoryListAsync()).Data.Items;
+
             if (pizza == null)
             {
                 return NotFound();
