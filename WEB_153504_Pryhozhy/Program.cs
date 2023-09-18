@@ -10,6 +10,27 @@ UriData? uriData = builder.Configuration.GetSection("UriData").Get<UriData>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IPizzaService, ApiPizzaService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultScheme = "cookie";
+    opt.DefaultChallengeScheme = "oidc";
+})
+    .AddCookie("cookie")
+    .AddOpenIdConnect("oidc", options =>
+    {
+        options.Authority =
+        builder.Configuration["InteractiveServiceSettings:AuthorityUrl"];
+        options.ClientId =
+        builder.Configuration["InteractiveServiceSettings:ClientId"];
+        options.ClientSecret =
+        builder.Configuration["InteractiveServiceSettings:ClientSecret"];
+        // Получить Claims пользователя
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.ResponseType = "code";
+        options.ResponseMode = "query";
+        options.SaveTokens = true;
+    });
 
 builder.Services.AddRazorPages();
 
@@ -23,17 +44,22 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app
     .UseHttpsRedirection()
     .UseStaticFiles()
-    .UseRouting()
-    .UseAuthorization();
+    .UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
 
-app.MapRazorPages();
+app
+    .MapRazorPages()
+    .RequireAuthorization();
 
 app.Run();

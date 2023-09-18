@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using WEB_153504_Pryhozhy.API.Data;
 using WEB_153504_Pryhozhy.API.Services.CategoryService;
@@ -13,6 +14,17 @@ builder.Services.AddScoped<IPizzaService, PizzaService>();
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite(builder.Configuration.GetConnectionString("Default"))
 );
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt =>
+        {
+            opt.Authority = builder
+            .Configuration
+            .GetSection("ISUri").Value;
+            opt.TokenValidationParameters.ValidateAudience = false;
+            opt.TokenValidationParameters.ValidTypes =
+            new[] { "at+jwt" };
+        });
 
 var app = builder.Build();
 
@@ -31,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

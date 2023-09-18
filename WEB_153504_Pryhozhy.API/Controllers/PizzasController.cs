@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WEB_153504_Pryhozhy.API.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WEB_153504_Pryhozhy.API.Services.PizzaService;
 using WEB_153504_Pryhozhy.Domain.Entities;
 using WEB_153504_Pryhozhy.Domain.Models;
@@ -22,6 +21,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         [HttpGet("{category}")]
         [HttpGet("page{pageNo:int}")]
         [HttpGet("{category}/page{pageNo:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Pizza>>> GetPizzas(string? category, int pageNo = 1, int pageSize = 3)
         {
             var response = await _pizzaService.GetPizzaListAsync(category, pageNo, pageSize);
@@ -30,6 +30,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Pizza>> GetPizza(int id)
         {
             var response = await _pizzaService.GetByIdAsync(id);
@@ -42,6 +43,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutPizza(int id, Pizza pizza)
         {
             await _pizzaService.UpdateAsync(id, pizza);
@@ -50,6 +52,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Pizza>> PostPizza(Pizza pizza)
         {
             var response = await _pizzaService.CreateAsync(pizza);
@@ -58,6 +61,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePizza(int id)
         {
             await _pizzaService.DeleteAsync(id);
@@ -66,6 +70,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpPost("{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {
             var response = await _pizzaService.SaveImageAsync(id, formFile);

@@ -1,6 +1,8 @@
-﻿using System.Data.SqlTypes;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using WEB_153504_Pryhozhy.Domain.Entities;
@@ -14,8 +16,9 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
         private readonly string? _pageSize;
         private readonly JsonSerializerOptions _serializerOptions;
         private readonly ILogger<ApiPizzaService> _logger;
+        private readonly HttpContext? _httpContext;
 
-        public ApiPizzaService(HttpClient httpClient, IConfiguration configuration, ILogger<ApiPizzaService> logger)
+        public ApiPizzaService(HttpClient httpClient, IConfiguration configuration, ILogger<ApiPizzaService> logger, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
             _pageSize = configuration.GetSection("ItemsPerPage").Value;
@@ -24,10 +27,12 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             _logger = logger;
+            _httpContext = httpContextAccessor.HttpContext;
         }
 
         public async Task<ResponseData<Pizza>> CreateAsync(Pizza pizza, IFormFile? formFile)
         {
+            AddTokenToHeader();
             var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}pizzas/");
             var response = await _httpClient.PostAsJsonAsync(urlString.ToString(), pizza, _serializerOptions);
 
@@ -53,6 +58,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
         }
         public async Task DeleteAsync(int id)
         {
+            AddTokenToHeader();
             var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}pizzas/{id}");
             await _httpClient.DeleteAsync(urlString.ToString());
         }
@@ -74,6 +80,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
 
         public async Task<ResponseData<ListModel<Pizza>>> GetPizzaListAsync(string? categoryNormalizedName, int pageNo = 1)
         {
+            AddTokenToHeader();
             var urlString = new StringBuilder($"{_httpClient.BaseAddress.AbsoluteUri}pizzas/");
 
             if (categoryNormalizedName != null)
@@ -116,6 +123,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
 
         public async Task UpdateAsync(int id, Pizza pizza, IFormFile? formFile)
         {
+            AddTokenToHeader();
             var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}pizzas/{id}");
             await _httpClient.PutAsJsonAsync(urlString.ToString(), pizza, _serializerOptions);
 
@@ -127,6 +135,7 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
 
         private async Task SaveImageAsync(int id, IFormFile image)
         {
+            AddTokenToHeader();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -137,6 +146,12 @@ namespace WEB_153504_Pryhozhy.Services.PizzaService
             content.Add(streamContent, "formFile", image.FileName);
             request.Content = content;
             await _httpClient.SendAsync(request);
+        }
+
+        private async void AddTokenToHeader()
+        {
+            var token = await _httpContext.GetTokenAsync("access_token");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         }
     }
 }
