@@ -1,6 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
 using WEB_153504_Pryhozhy.Models;
 using WEB_153504_Pryhozhy.Services.CategoryService;
 using WEB_153504_Pryhozhy.Services.PizzaService;
+using WEB_153504_Pryhozhy.TagHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IPizzaService, ApiPizzaService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
 builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<PagerTagHelper>();
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultScheme = "cookie";

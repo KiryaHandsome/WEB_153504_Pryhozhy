@@ -1,3 +1,4 @@
+@using WEB_153504_Pryhozhy.Domain.Models;
 @model ListModel<Pizza>;
 
 @{
@@ -62,30 +63,34 @@
 <br />
 
 <nav>
-    <ul class="pagination justify-content-center">
-        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "active")">
-            <a class="page-link"
-               asp-controller="pizza"
-               asp-route-pageNo="@prev">
-                &laquo;
-            </a>
-        </li>
-        @for (var pageNum = 1; pageNum <= Model.TotalPages; pageNum += 1)
-        {
-            <li class="page-item @(pageNum == Model.CurrentPage ? "active" : "")">
-                <a class="page-link"
-                   asp-controller="pizza"
-                   asp-route-pageNo="@pageNum">
-                    @pageNum
-                </a>
-            </li>
-        }
-        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "active")">
-            <a class="page-link"
-               asp-controller="pizza"
-               asp-route-pageNo="@next">
-                &raquo;
-            </a>
-        </li>
-    </ul>
+    <Pager current-page="@Model.CurrentPage"
+           total-pages="@Model.TotalPages"
+           category="@ViewData["currentCategory"]">
+    </Pager>
+    @* <ul class="pagination justify-content-center">
+    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "active")">
+    <a class="page-link"
+    asp-controller="pizza"
+    asp-route-pageNo="@prev">
+    &laquo;
+    </a>
+    </li>
+    @for (var pageNum = 1; pageNum <= Model.TotalPages; pageNum += 1)
+    {
+    <li class="page-item @(pageNum == Model.CurrentPage ? "active" : "")">
+    <a class="page-link"
+    asp-controller="pizza"
+    asp-route-pageNo="@pageNum">
+    @pageNum
+    </a>
+    </li>
+    }
+    <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "active")">
+    <a class="page-link"
+    asp-controller="pizza"
+    asp-route-pageNo="@next">
+    &raquo;
+    </a>
+    </li>
+    </ul> *@
 </nav>
