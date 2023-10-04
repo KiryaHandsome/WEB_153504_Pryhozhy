@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using WEB_153504.Extensions;
 using WEB_153504_Pryhozhy.Domain.Entities;
 using WEB_153504_Pryhozhy.Services.CategoryService;
 using WEB_153504_Pryhozhy.Services.PizzaService;
+
 
 namespace WEB_153504_Pryhozhy.Controllers
 {
@@ -31,6 +34,12 @@ namespace WEB_153504_Pryhozhy.Controllers
             }
 
             ViewData["currentCategory"] = GetCategoryNameOrDefault(category, categoryResponse.Data.Items);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_CatalogPartial", productResponse.Data);
+            }
+
             return View(productResponse.Data);
         }
 

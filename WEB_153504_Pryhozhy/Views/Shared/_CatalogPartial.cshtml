@@ -1,0 +1,31 @@
+﻿@using WEB_153504_Pryhozhy.Domain.Models
+@using WEB_153504_Pryhozhy.Domain.Entities
+
+@model ListModel<Pizza>
+
+<div id="catalog-partial">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model.Items)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@item.Image" class="card-img-top pizza-img">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text text-center"><strong>@item.Price$</strong></p>
+                    </div>
+                    <div class="btn btn-primary" asp-action="some action">
+                        В корзину
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <nav>
+        <Pager current-page="@Model.CurrentPage"
+               total-pages="@Model.TotalPages">
+        </Pager>
+    </nav>
+</div>
