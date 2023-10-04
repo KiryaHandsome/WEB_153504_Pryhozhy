@@ -1,6 +1,6 @@
 ﻿namespace WEB_153504.Extensions
 {
-    public static class HttpRequestExtension
+    public static class HttpRequestExtensions
     {
         public static bool IsAjaxRequest(this HttpRequest request)
         {

@@ -3,6 +3,11 @@
 
 @model ListModel<Pizza>
 
+@{
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+}
+
 <div id="catalog-partial">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var item in Model.Items)
@@ -15,9 +20,14 @@
                         <p class="card-text">@item.Description</p>
                         <p class="card-text text-center"><strong>@item.Price$</strong></p>
                     </div>
-                    <div class="btn btn-primary" asp-action="some action">
+                    <a asp-controller="cart"
+                       asp-action="Add"
+                       asp-route-id="@item.Id"
+                       asp-route-returnUrl="@returnUrl"
+                       class="btn btn-primary text-white">
+                        <i class="fa-solid fa-cart-shopping"></i>
                         В корзину
-                    </div>
+                    </a>
                 </div>
             </div>
         }
@@ -25,7 +35,8 @@
     <br />
     <nav>
         <Pager current-page="@Model.CurrentPage"
-               total-pages="@Model.TotalPages">
+               total-pages="@Model.TotalPages"
+               is-admin="false">
         </Pager>
     </nav>
 </div>

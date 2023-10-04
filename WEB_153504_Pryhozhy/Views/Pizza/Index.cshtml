@@ -4,8 +4,6 @@
 @{
     ViewData["Title"] = "Pizzas Catalog";
     var categories = ViewData["categories"] as List<Category>;
-    int prev = Model.CurrentPage == 1 ? 1 : Model.CurrentPage - 1;
-    int next = Model.CurrentPage == Model.TotalPages ? Model.TotalPages : Model.CurrentPage + 1;
 }
 
 <h2>Каталог пицц</h2>

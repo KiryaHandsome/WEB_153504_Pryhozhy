@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using WEB_153504_Pryhozhy.Domain.Entities;
 using WEB_153504_Pryhozhy.Models;
+using WEB_153504_Pryhozhy.Services;
 using WEB_153504_Pryhozhy.Services.CategoryService;
 using WEB_153504_Pryhozhy.Services.PizzaService;
 using WEB_153504_Pryhozhy.TagHelpers;
@@ -11,9 +13,16 @@ UriData? uriData = builder.Configuration.GetSection("UriData").Get<UriData>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IPizzaService, ApiPizzaService>(opt => opt.BaseAddress = new Uri(uriData.ApiUri));
-builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
+
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
+builder.Services.AddScoped(SessionCart.GetCart);
 builder.Services.AddScoped<PagerTagHelper>();
+
+// add session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 builder.Services.AddAuthentication(opt =>
 {
@@ -23,13 +32,9 @@ builder.Services.AddAuthentication(opt =>
     .AddCookie("cookie")
     .AddOpenIdConnect("oidc", options =>
     {
-        options.Authority =
-        builder.Configuration["InteractiveServiceSettings:AuthorityUrl"];
-        options.ClientId =
-        builder.Configuration["InteractiveServiceSettings:ClientId"];
-        options.ClientSecret =
-        builder.Configuration["InteractiveServiceSettings:ClientSecret"];
-        // Получить Claims пользователя
+        options.Authority = builder.Configuration["InteractiveServiceSettings:AuthorityUrl"];
+        options.ClientId = builder.Configuration["InteractiveServiceSettings:ClientId"];
+        options.ClientSecret = builder.Configuration["InteractiveServiceSettings:ClientSecret"];
         options.GetClaimsFromUserInfoEndpoint = true;
         options.ResponseType = "code";
         options.ResponseMode = "query";
@@ -48,11 +53,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 app
     .UseHttpsRedirection()
     .UseStaticFiles()
     .UseRouting();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

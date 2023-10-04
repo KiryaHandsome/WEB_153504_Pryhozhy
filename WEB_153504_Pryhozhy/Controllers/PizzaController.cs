@@ -20,6 +20,7 @@ namespace WEB_153504_Pryhozhy.Controllers
             _categoryService = categoryService;
         }
 
+        [Route("{category?}")]
         public async Task<IActionResult> Index(string? category, int pageNo = 1)
         {
             var productResponse = await _pizzaService.GetPizzaListAsync(category, pageNo);

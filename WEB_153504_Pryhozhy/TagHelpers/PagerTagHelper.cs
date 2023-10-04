@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.AspNetCore.Routing;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WEB_153504_Pryhozhy.TagHelpers
 {
-    [HtmlTargetElement("Pager", Attributes = "current-page, total-pages")]
+    [HtmlTargetElement("Pager", Attributes = "current-page, total-pages, is-admin")]
     public class PagerTagHelper : TagHelper
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
         private readonly LinkGenerator _linkGenerator;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -59,10 +57,11 @@ namespace WEB_153504_Pryhozhy.TagHelpers
             var aTag = new TagBuilder("a");
             aTag.AddCssClass("page-link");
 
-           var link = _linkGenerator.GetPathByPage(
-                _httpContextAccessor.HttpContext,
-                values: new { pageNo = targetPageNumber }
-            );
+            var link = _linkGenerator.GetPathByPage(
+                 _httpContextAccessor.HttpContext,
+                 values: new { pageNo = targetPageNumber }
+             );
+
             aTag.Attributes.Add("href", link);
             aTag.InnerHtml.AppendHtml(text);
             liTag.InnerHtml.AppendHtml(aTag);
