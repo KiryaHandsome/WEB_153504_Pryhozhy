@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Routing;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WEB_153504_Pryhozhy.TagHelpers
@@ -8,66 +9,62 @@ namespace WEB_153504_Pryhozhy.TagHelpers
     [HtmlTargetElement("Pager", Attributes = "current-page, total-pages")]
     public class PagerTagHelper : TagHelper
     {
-        // Properties to configure the pagination
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public PagerTagHelper(LinkGenerator linkGenerator, IHttpContextAccessor httpContextAccessor)
+        {
+            _linkGenerator = linkGenerator;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            // Create a div element with the specified class
             var divTag = new TagBuilder("div");
             divTag.AddCssClass("pagination justify-content-center");
-
-            // Add the previous page link
-            divTag.InnerHtml.AppendHtml(CreateArrowLink("&laquo;", CurrentPage - 1));
-
+            divTag.InnerHtml.AppendHtml(CreatePageLink("&laquo;", CurrentPage - 1, GetArrowClass)); // previous page link
             for (var pageNum = 1; pageNum <= TotalPages; pageNum++)
             {
-                divTag.InnerHtml.AppendHtml(CreatePageLink(pageNum.ToString(), pageNum));
+                var pageLink = CreatePageLink(pageNum.ToString(), pageNum, GetPageClass);
+                divTag.InnerHtml.AppendHtml(pageLink);
             }
+            divTag.InnerHtml.AppendHtml(CreatePageLink("&raquo;", CurrentPage + 1, GetArrowClass)); // next page link
 
-            // Add the next page link
-            divTag.InnerHtml.AppendHtml(CreateArrowLink("&raquo;", CurrentPage + 1));
-
-            // Set the result as the inner HTML of the custom-pagination tag
             output.TagName = "ul";
             output.Content.SetHtmlContent(divTag);
         }
 
-        private TagBuilder CreateArrowLink(string symbol, int targetPage)
+        private string GetArrowClass(int pageNum)
         {
-            var liTag = new TagBuilder("li");
-            liTag.AddCssClass("page-item");
-            if (targetPage < 1 || targetPage > TotalPages)
-            {
-                liTag.AddCssClass("disabled");
-            }
+            if (pageNum < 1 || pageNum > TotalPages)
+                return "disabled";
             else
-            {
-                liTag.AddCssClass("active");
-            }
-
-            var linkTag = new TagBuilder("a");
-            linkTag.AddCssClass("page-link");
-            linkTag.Attributes.Add("href", $"/catalog?pageNo={targetPage}");
-            linkTag.InnerHtml.AppendHtml(symbol);
-            liTag.InnerHtml.AppendHtml(linkTag);
-
-            return liTag;
+                return "active";
         }
 
-        private TagBuilder CreatePageLink(string text, int pageNo)
+        private string GetPageClass(int pageNum)
+        {
+            return CurrentPage == pageNum ? "active" : "";
+        }
+
+        private TagBuilder CreatePageLink(string text, int targetPageNumber, Func<int, string> liTagClassProducer)
         {
             var liTag = new TagBuilder("li");
             liTag.AddCssClass("page-item");
-            liTag.AddCssClass(CurrentPage == pageNo ? "active" : "");
+            liTag.AddCssClass(liTagClassProducer.Invoke(targetPageNumber));
 
             var aTag = new TagBuilder("a");
             aTag.AddCssClass("page-link");
 
-            aTag.Attributes.Add("href", $"/catalog?pageNo={pageNo}");
+           var link = _linkGenerator.GetPathByPage(
+                _httpContextAccessor.HttpContext,
+                values: new { pageNo = targetPageNumber }
+            );
+            aTag.Attributes.Add("href", link);
             aTag.InnerHtml.AppendHtml(text);
-
             liTag.InnerHtml.AppendHtml(aTag);
 
             return liTag;
