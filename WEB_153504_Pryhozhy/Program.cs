@@ -1,4 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Events;
+using System.Diagnostics;
+using WEB_153504_Pryhozhy;
 using WEB_153504_Pryhozhy.Domain.Entities;
 using WEB_153504_Pryhozhy.Models;
 using WEB_153504_Pryhozhy.Services;
@@ -19,6 +23,19 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
 builder.Services.AddScoped(SessionCart.GetCart);
 builder.Services.AddScoped<PagerTagHelper>();
+
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).Filter.ByIncludingOnly(evt =>
+    {
+        if (evt.Properties.TryGetValue("StatusCode", out var statusCodeValue) &&
+            statusCodeValue is ScalarValue statusCodeScalar &&
+            statusCodeScalar.Value is int statusCode)
+        {
+            Debug.WriteLine("QWERTYUIOP");
+            return statusCode < 200 || statusCode >= 300;
+        }
+        return false;
+    }));
 
 // add session
 builder.Services.AddDistributedMemoryCache();
@@ -59,7 +76,7 @@ app
     .UseRouting();
 
 app.UseSession();
-
+app.UseLoggingMiddleware();
 app.UseAuthentication();
 app.UseAuthorization();
 

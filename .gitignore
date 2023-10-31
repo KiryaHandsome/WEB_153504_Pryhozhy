@@ -10,6 +10,8 @@
 *.userosscache
 *.sln.docstates
 
+WEB_153504_Pryhozhy/logs
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
