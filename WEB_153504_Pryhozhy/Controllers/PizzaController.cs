@@ -25,15 +25,13 @@ namespace WEB_153504_Pryhozhy.Controllers
         {
             var productResponse = await _pizzaService.GetPizzaListAsync(category, pageNo);
             var categoryResponse = await _categoryService.GetCategoryListAsync();
-            if (categoryResponse.Success)
-            {
-                ViewData["categories"] = categoryResponse.Data?.Items;
-            }
-            if (!productResponse.Success)
-            {
-                return NotFound(productResponse.ErrorMessage);
-            }
 
+            if (!productResponse.Success)
+                return NotFound(productResponse.ErrorMessage);
+            if(!categoryResponse.Success)
+                return NotFound(categoryResponse.ErrorMessage);
+
+            ViewData["categories"] = categoryResponse.Data?.Items;
             ViewData["currentCategory"] = GetCategoryNameOrDefault(category, categoryResponse.Data.Items);
 
             if (Request.IsAjaxRequest())

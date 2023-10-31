@@ -11,12 +11,14 @@ namespace WEB_153504_Pryhozhy.API.Services.PizzaService
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly string _imagesPath;
+        private readonly int MAX_PAGE_SIZE = 20;
 
         public PizzaService(AppDbContext context,
                             IHttpContextAccessor httpContextAccessor,
-                            IWebHostEnvironment env)
+                            IWebHostEnvironment? env)
         {
-            _imagesPath = Path.Combine(env.WebRootPath, "Images");
+            if (env != null)
+                _imagesPath = Path.Combine(env.WebRootPath, "Images");
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -55,12 +57,21 @@ namespace WEB_153504_Pryhozhy.API.Services.PizzaService
             var neededPizzas = _context.Pizzas
                  .Where(p => categoryNormalizedName == null || p.CategoryId == category.Id)
                  .ToList();
+            if (pageSize > MAX_PAGE_SIZE)
+                pageSize = MAX_PAGE_SIZE;
             data.Items = neededPizzas
                  .Skip((pageNo - 1) * pageSize)
                  .Take(pageSize)
                  .ToList();
             data.TotalPages = ComputeTotalPages(neededPizzas.Count, pageSize);
             data.CurrentPage = pageNo;
+            if (data.CurrentPage < 0 || data.TotalPages < data.CurrentPage)
+                return Task.FromResult(
+                    new ResponseData<ListModel<Pizza>>
+                    {
+                        Success = false
+                    }
+               );
 
             return Task.FromResult(
                 new ResponseData<ListModel<Pizza>>()
