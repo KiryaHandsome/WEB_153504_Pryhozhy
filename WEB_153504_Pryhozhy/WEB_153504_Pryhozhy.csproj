@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\WEB_153504_Pryhozhy.BlazorWasm\Pages\CategorySelector.razor" Link="CategorySelector.razor" />
+    <None Include="..\WEB_153504_Pryhozhy.BlazorWasm\Pages\Pager.razor" Link="Pager.razor" />
+    <None Include="..\WEB_153504_Pryhozhy.BlazorWasm\Pages\ProductDetail.razor" Link="ProductDetail.razor" />
+    <None Include="..\WEB_153504_Pryhozhy.BlazorWasm\Pages\ProductsList.razor" Link="ProductsList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WEB_15354_Pryhozhy.Domain\WEB_153504_Pryhozhy.Domain.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,19 @@
+@using WEB_153504_Pryhozhy.Domain.Entities;
+@using WEB_153504_Pryhozhy.BlazorWasm.Pages;
+
+@if (SelectedProduct != null)
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@SelectedProduct.Image" alt="Product image">
+        <div class="card-body">
+            <h5 class="card-title">@SelectedProduct.Name</h5>
+            <p class="card-text">@SelectedProduct.Description</p>
+            <a class="btn btn-primary">Цена: @SelectedProduct.Price</a>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Pizza? SelectedProduct { get; set; }
+}

@@ -1,0 +1,39 @@
+@using WEB_153504_Pryhozhy.BlazorWasm.Pages;
+@using WEB_153504_Pryhozhy.BlazorWasm.Services;
+@inject IDataService DataService
+@implements IDisposable
+
+
+@if(DataService.ObjectsList != null)
+{
+        <table>
+            <tr>
+                <th>Название</th>
+                <th></th>
+            </tr>
+            @foreach (var product in DataService.ObjectsList)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td><button class="btn btn-outline-secondary" @onclick="()=>onButtonClicked.Invoke(product.Id)"> <span class="oi oi-magnifying-glass"></span> Подробнее</button></td>
+                </tr>
+            }
+        </table>
+}
+
+@code {
+
+    public delegate void OnButtonClicked(int id);
+
+    [Parameter]
+    public OnButtonClicked onButtonClicked { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

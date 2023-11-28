@@ -1,0 +1,42 @@
+@using WEB_153504_Pryhozhy.BlazorWasm.Pages;
+@using WEB_153504_Pryhozhy.BlazorWasm.Services;
+@inject IDataService DataService
+@implements IDisposable
+
+<div class="dropdown">
+    <div class="dropdown me-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            @SelectedCategory
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li>
+                <a class="dropdown-item" href="/fetchdata/">Все</a>
+            </li>
+            <hr class="dropdown-divider"> <!-- Move this line outside the loop -->
+            @foreach (var item in DataService.Categories)
+            {
+                <li>
+                    <a class="dropdown-item" href="/fetchdata/@item?.NormalizedName">
+                        @item.Name
+                    </a>
+                </li>
+                <hr class="dropdown-divider"> <!-- Add a separator after each item -->
+            }
+        </ul>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string SelectedCategory { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

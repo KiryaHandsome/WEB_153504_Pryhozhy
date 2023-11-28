@@ -26,6 +26,16 @@ builder.Services
             new[] { "at+jwt" };
         });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("BlazorWasmPolicy", builder =>
+    {
+        builder.WithOrigins("https://localhost:7213")
+             .AllowAnyMethod()
+             .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 DbInitializer.SeedData(app).GetAwaiter().GetResult();
@@ -38,10 +48,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseCors("BlazorWasmPolicy");
 app.UseRouting();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

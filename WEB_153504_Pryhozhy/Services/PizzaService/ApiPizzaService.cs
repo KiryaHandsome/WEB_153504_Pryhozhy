@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

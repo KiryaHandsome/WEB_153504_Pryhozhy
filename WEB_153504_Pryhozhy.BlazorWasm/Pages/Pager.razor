@@ -1,0 +1,39 @@
+﻿@using WEB_153504_Pryhozhy.BlazorWasm.Services;
+@using WEB_153504_Pryhozhy.BlazorWasm.Pages;
+@inject IDataService DataService
+@implements IDisposable
+
+@if (DataService.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(DataService.CurrentPage == 1 ? "disabled" : "active")">
+                <button @onclick="()=>DataService.GetProductListAsync(Category,DataService.CurrentPage-1)" class="page-link">&laquo;</button>
+            </li>
+            @for (var num = 1; num <= DataService.TotalPages; num += 1)
+            {
+                var currentPageNum = num;
+                <li class="page-item @(num.Equals(DataService.CurrentPage)  ? "active" : "")"><button class="page-link"  @onclick="()=>DataService.GetProductListAsync(Category, currentPageNum)">@num</button></li>
+            }
+            <li class="page-item @(DataService.CurrentPage==DataService.TotalPages ? "disabled" : "active")">
+                <button class="page-link" @onclick="()=>DataService.GetProductListAsync(Category, DataService.CurrentPage+1)">&raquo;</button>
+            </li>
+        </ul>
+    </nav>
+}
+
+@code {
+    [Parameter]
+    public string? Category { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+
+    }
+
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

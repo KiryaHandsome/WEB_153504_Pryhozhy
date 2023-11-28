@@ -1,4 +1,7 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
+using System.Collections.Generic;
+using static System.Net.WebRequestMethods;
 
 namespace WEB_153504_Pryhozhy.IdentityServer;
 
@@ -38,16 +41,22 @@ public static class Config
             {
                 ClientId = "interactive",
                 ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-
                 AllowedGrantTypes = GrantTypes.Code,
-
-
                 RedirectUris = { "https://localhost:7001/signin-oidc" },
                 FrontChannelLogoutUri = "https://localhost:7001/signout-oidc",
                 PostLogoutRedirectUris = { "https://localhost:7001/signout-callback-oidc" },
-
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "api.read", "api.write" }
             },
+            new Client
+            {
+                ClientId = "blazorApp",
+                AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RedirectUris = {"https://localhost:7213/authentication/login-callback" },
+                PostLogoutRedirectUris = {"https://localhost:7213/authentication/logout-callback" },
+                AllowOfflineAccess = true,
+                AllowedScopes = { "openid", "profile", "api.read","api.write"}
+            }
         };
 }

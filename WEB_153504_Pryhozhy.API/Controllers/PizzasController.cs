@@ -21,8 +21,8 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         [HttpGet("{category}")]
         [HttpGet("page{pageNo:int}")]
         [HttpGet("{category}/page{pageNo:int}")]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Pizza>>> GetPizzas(string? category, int pageNo = 1, int pageSize = 3)
+        [Authorize]
+        public async Task<ActionResult<ResponseData<ListModel<Pizza>>>> GetPizzas(string? category, int pageNo = 1, int pageSize = 3)
         {
             var response = await _pizzaService.GetPizzaListAsync(category, pageNo, pageSize);
 
@@ -30,7 +30,7 @@ namespace WEB_153504_Pryhozhy.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult<Pizza>> GetPizza(int id)
         {
             var response = await _pizzaService.GetByIdAsync(id);

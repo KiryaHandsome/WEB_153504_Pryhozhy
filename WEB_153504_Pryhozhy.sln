@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153504_Pryhozhy.API", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153504_Pryhozhy.IdentityServer", "WEB_153504_Pryhozhy.IdentityServer\WEB_153504_Pryhozhy.IdentityServer.csproj", "{9D8DBC44-C676-432B-8078-F85390E33AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153504_Pryhozhy.Tests", "WEB_153504_Pryhozhy.Tests\WEB_153504_Pryhozhy.Tests.csproj", "{7D4E01B3-4F0C-4ADD-A77C-FAEF70A81309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB_153504_Pryhozhy.Tests", "WEB_153504_Pryhozhy.Tests\WEB_153504_Pryhozhy.Tests.csproj", "{7D4E01B3-4F0C-4ADD-A77C-FAEF70A81309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_153504_Pryhozhy.BlazorWasm", "WEB_153504_Pryhozhy.BlazorWasm\WEB_153504_Pryhozhy.BlazorWasm.csproj", "{C5A6B3D3-399C-48A5-8098-77C3C063445D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7D4E01B3-4F0C-4ADD-A77C-FAEF70A81309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4E01B3-4F0C-4ADD-A77C-FAEF70A81309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D4E01B3-4F0C-4ADD-A77C-FAEF70A81309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A6B3D3-399C-48A5-8098-77C3C063445D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A6B3D3-399C-48A5-8098-77C3C063445D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A6B3D3-399C-48A5-8098-77C3C063445D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A6B3D3-399C-48A5-8098-77C3C063445D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

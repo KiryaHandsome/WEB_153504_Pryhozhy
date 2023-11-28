@@ -24,14 +24,14 @@ builder.Services.AddScoped<ICategoryService, MemoryCategoryService>();
 builder.Services.AddScoped(SessionCart.GetCart);
 builder.Services.AddScoped<PagerTagHelper>();
 
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+builder.Host.UseSerilog
+((hostingContext, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).Filter.ByIncludingOnly(evt =>
     {
         if (evt.Properties.TryGetValue("StatusCode", out var statusCodeValue) &&
             statusCodeValue is ScalarValue statusCodeScalar &&
             statusCodeScalar.Value is int statusCode)
         {
-            Debug.WriteLine("QWERTYUIOP");
             return statusCode < 200 || statusCode >= 300;
         }
         return false;
